@@ -411,7 +411,7 @@ NODE $remote_host_id
 						$nodename=$data[0];
 						$tmp_print_x=$node_location[$nodename]["x"];
 						$tmp_print_y=$node_location[$nodename]["y"];
-						$MAXspeed=$xDP[interface_data][$port_id][ifHighSpeed];
+						$MAXspeed=$xDP[interface_data][$port_id][ifSpeed]/1000000;
 						$weather_data[nodes][$nodename]="
 NODE $nodename
 	LABEL $nodename
@@ -818,9 +818,9 @@ function print_form(){
 	$tablecolumn1.="Stop iterations when device group change: <input type='checkbox' name='stop_iterations_on_group_change' $stop_iterations_on_group_change value='1'><br>";
 	$tablecolumn1.="Exclude managed devices from other device_group in output: <input type='checkbox' name='exclude_devices_from_other_device_groups' $exclude_devices_from_other_device_groups value='1'><br> ";
 	$tablecolumn1.="Only include fully managed devices: <input type='checkbox' name='only_managed_devices' $only_managed_devices_checked value='1'><br> ";
-	$tablecolumn1.="<br><input name='display' value='print_connections' type='submit'>
-		<input name='display' value='print_graphdata' type='submit'>
-		<input name='display' value='print_weathermap_data' type='submit'>
+	$tablecolumn1.="<br><input class='btn btn-info' name='display' value='print_connections' type='submit'>
+		<input class='btn btn-info' name='display' value='print_graphdata' type='submit'>
+		<input class='btn btn-info' name='display' value='print_weathermap_data' type='submit'>
 		<!-- <input name='settings' value='$settings' type='submit'> -->
 		<br>";
 	$tablecolumn2.="Name for Weathermap: <input name='name4weather' type='text' value='$name4weather'><br>";
@@ -828,7 +828,7 @@ function print_form(){
 	$tablecolumn2.="Exclude unmanaged neibours where device type match: <input name='exclude_type' type='text' value='$exclude_type'><br>";
 	$tablecolumn2.="Exclude unmanaged neibours where device name match: <input name='exclude_name' type='text' value='$exclude_name'><br>";
 	print "Select device to start map from:";
-	print " <form action='/plugin/p=$GLOBALS[plugin_name]' method='post'> ";
+	print " <form action='/plugin/v1/$GLOBALS[plugin_name]' method='post'> ";
 	print csrf_field();
 	#print $tablecolumn1;
 	print "<table><tr><td>$tablecolumn1<td>$tablecolumn2</tr></table>";
