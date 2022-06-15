@@ -347,6 +347,7 @@ NODE $d_id
 						$remote_port_name=$xDP["interface_data"][$remote_data]["ifName"];
 						$remote_host_id=$xDP["interface_data"][$remote_data]["device_id"];
 						$remote_host_name=$GLOBALS["devices"][$remote_host_id];
+                        $MAXspeed=$xDP["interface_data"][$remote_data]["ifSpeed"]/1000000;
 						array_push ($printed_interfaces, $port_id, $remote_data);
 						if ($weather_data[links]["$d_id-$remote_host_id"]){
 							$multi_line_counter["$d_id-$remote_host_id"]++;
@@ -554,6 +555,8 @@ function do_xDP_check ($device_id, $xDP, $iterations){
 		$max_iterations=$_POST["iterations"];
 	}
 
+    $devices_run = [];
+
 	$iterations++;
 #	print "DEBUG: do_xDP_check($device_id, \$xDP, $iterations) \$max_iterations=$max_iterations<br>";
 	if ($iterations <= $max_iterations){
@@ -744,7 +747,7 @@ function print_form(){
 	WHERE
 	links.local_device_id=devices.device_id
 	ORDER BY devices.sysName;";
-	$tablecolumn1.=" <select name='start_id'> ";
+    $tablecolumn1 =" <select name='start_id'> ";
 	foreach( dbFetchRows($query) as $line){
 		$id="$line[local_device_id]";
 		$sysName="$line[sysName]";
@@ -823,7 +826,7 @@ function print_form(){
 		<input class='btn btn-info' name='display' value='print_weathermap_data' type='submit'>
 		<!-- <input name='settings' value='$settings' type='submit'> -->
 		<br>";
-	$tablecolumn2.="Name for Weathermap: <input name='name4weather' type='text' value='$name4weather'><br>";
+    $tablecolumn2 ="Name for Weathermap: <input name='name4weather' type='text' value='$name4weather'><br>";
 	$tablecolumn2.="Include this port ids (separate with ,): <input name='include_port_id' type='text' value='$include_port_id'><br>";
 	$tablecolumn2.="Exclude unmanaged neibours where device type match: <input name='exclude_type' type='text' value='$exclude_type'><br>";
 	$tablecolumn2.="Exclude unmanaged neibours where device name match: <input name='exclude_name' type='text' value='$exclude_name'><br>";
